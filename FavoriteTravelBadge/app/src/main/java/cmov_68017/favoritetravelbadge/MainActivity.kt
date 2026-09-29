@@ -76,7 +76,8 @@ fun TravelBadgeScreen() {
             Row(
                 verticalAlignment = Alignment.CenterVertically, // aligns the children vertically
                 horizontalArrangement = Arrangement.Center, // aligns the children horizontally
-                modifier = Modifier.fillMaxWidth() // fills the max size of the screen width
+                modifier = Modifier.fillMaxWidth() // fills the entire horizontal space of its parent
+                // source: https://medium.com/@dhivyakgf/jetpack-compose-fillmaxwidth-fillmaxheight-and-fillmaxsize-visually-explained-f716caee7c8e
             ) {
                 Card(
                     modifier = Modifier.size(140.dp), // size of the card (h and w)
@@ -235,6 +236,8 @@ fun TravelBadgeScreen() {
                 ) {
                     Column(
                         modifier = Modifier.weight(1f),
+                        // weight is used inside row or column layouts to divide space proportionally
+                        // source: https://medium.com/@dhivyakgf/weight-in-jetpack-compose-91966cd4e0f8
                         horizontalAlignment = Alignment.Start
                     ) {
                         Text(
@@ -243,7 +246,7 @@ fun TravelBadgeScreen() {
                             fontWeight = FontWeight.Medium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        Spacer(modifier = Modifier.height(8.dp)) // Espaço entre o título e os locais
+                        Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
                             text = "• Shibuya\n• Tokyo Skytree\n• Sensoji Temple",
@@ -283,8 +286,6 @@ fun TravelBadgeScreen() {
                 Card(
                     modifier = Modifier
                         .weight(1f)
-                        // weight is used inside row or column layouts to divide space proportionally
-                        // source: https://medium.com/@dhivyakgf/weight-in-jetpack-compose-91966cd4e0f8
                         .height(115.dp),
                     shape = RoundedCornerShape(12.dp),
                     elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
