@@ -316,9 +316,17 @@ fun TravelBadgeScreen() {
                         contentScale = ContentScale.Crop
                     )
                 }
+            }
 
-                Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Card(
                     modifier = Modifier
                         .weight(1f)
