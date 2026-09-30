@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -113,13 +114,13 @@ fun TravelBadgeScreen() {
                         text = "Carlos Simões",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = Color.Black
                     )
                     Text(
                         text = "Dream Destination:",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = Color.Black
                     )
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -128,7 +129,7 @@ fun TravelBadgeScreen() {
                             text = "Tokyo",
                             fontSize = 32.sp,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
+                            color = Color.Blue
                         )
                         Spacer(modifier = Modifier.width(30.dp))
                         Image(
@@ -164,13 +165,13 @@ fun TravelBadgeScreen() {
                             text = "Currency",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = Color.Black
                         )
                         Text(
                             text = "¥ JPY (Yen)",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
+                            color = Color.Blue
                         )
                     }
                     Column(
@@ -181,13 +182,13 @@ fun TravelBadgeScreen() {
                             text = "Language",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = Color.Black
                         )
                         Text(
                             text = "Japanese",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
+                            color = Color.Blue
                         )
                     }
                     Column(
@@ -198,7 +199,7 @@ fun TravelBadgeScreen() {
                             text = "Time",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = Color.Black
                         )
 
                         // source:
@@ -214,7 +215,7 @@ fun TravelBadgeScreen() {
                             text = tokyoTime,
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
+                            color = Color.Blue
                         )
                     }
                 }
@@ -244,7 +245,7 @@ fun TravelBadgeScreen() {
                             text = "Places to visit:",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Medium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = Color.Black
                         )
                         Spacer(modifier = Modifier.height(8.dp))
 
@@ -252,7 +253,7 @@ fun TravelBadgeScreen() {
                             text = "• Shibuya\n• Tokyo Skytree\n• Sensoji Temple",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
+                            color = Color.Blue
                         )
                     }
 
@@ -269,7 +270,7 @@ fun TravelBadgeScreen() {
                             text = "• Pokémon Center MEGA TOKYO\n• Tokyo Tower\n• Harajuku",
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
+                            color = Color.Blue
                         )
                     }
                 }
