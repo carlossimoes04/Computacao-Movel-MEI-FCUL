@@ -79,13 +79,26 @@ fun DiceWithButtonAndImage(navController: NavHostController, modifier: Modifier 
 
         Button (
             onClick = {
-                navController.navigate(
-                    Screens.DiceResult.route
-                        .replace(
-                            oldValue = "{result}",
-                            newValue = result.toString()
-                        )
-                )
+                when (result) {
+                    1 -> {
+                        navController.navigate(Screens.ScreenResult1.route)
+                    }
+                    2 -> {
+                        navController.navigate(Screens.ScreenResult2.route)
+                    }
+                    3 -> {
+                        navController.navigate(Screens.ScreenResult3.route)
+                    }
+                    4 -> {
+                        navController.navigate(Screens.ScreenResult4.route)
+                    }
+                    5 -> {
+                        navController.navigate(Screens.ScreenResult5.route)
+                    }
+                    else -> {
+                        navController.navigate(Screens.ScreenResult6.route)
+                    }
+                }
             }
         ) {
             Text(stringResource(R.string.result_screen), fontSize = 24.sp)
