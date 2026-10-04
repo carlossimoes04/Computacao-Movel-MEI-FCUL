@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -27,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import cmov_68017.dicerollertutorial.navigation.Screens
 import cmov_68017.dicerollertutorial.ui.theme.*
 
 @Composable
@@ -81,7 +84,7 @@ fun ScreenResult1(navController: NavHostController) {
                     textAlign = TextAlign.Center
                 )
 
-                var mockTemp by remember { mutableStateOf(0) }
+                var mockTemp by remember { mutableStateOf((15..35).random()) }
 
                 Text(
                     text = "Mock Temperature: $mockTemp°C",
@@ -99,6 +102,15 @@ fun ScreenResult1(navController: NavHostController) {
                     Text(text = "Refresh Temperature", fontSize = 22.sp)
                 }
             }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = { navController.navigate("roll_screen") },
+            elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp),
+        ){
+            Text(text = "Back to Dice", fontSize = 22.sp)
         }
     }
 }
