@@ -3,4 +3,10 @@
     <string name="roll">Roll</string>
     <string name="back">Back</string>
     <string name="result_screen">Result</string>
+    <string name="result_screen1">Screen 1</string>
+    <string name="result_screen2">Screen 2</string>
+    <string name="result_screen3">Screen 3</string>
+    <string name="result_screen4">Screen 4</string>
+    <string name="result_screen5">Screen 5</string>
+    <string name="result_screen6">Screen 6</string>
 </resources>
