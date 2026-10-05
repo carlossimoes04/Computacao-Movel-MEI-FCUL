@@ -23,7 +23,7 @@ import androidx.navigation.NavHostController
 import cmov_68017.dicerollertutorial.navigation.Screens
 
 @Composable
-fun DiceResult(navController: NavHostController, resultShow: Int =1, modifier: Modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center)) {
+fun DiceResult(navController: NavHostController, resultShow: Int, modifier: Modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center)) {
     var result by remember {  mutableStateOf(resultShow) } // it's var because the dice result isn't always the same
     // remember was used to save the state of the result variable
 

@@ -7,13 +7,17 @@ import cmov_68017.dicerollertutorial.DiceResult
 import cmov_68017.dicerollertutorial.DiceWithButtonAndImage
 import cmov_68017.dicerollertutorial.navigation.screens.*
 
+/**
+ * NavGraph is the list of screens that the user can navigate to.
+ */
 @Composable
 fun NavGraph (navController: NavHostController) {
-    NavHost(
+    NavHost( // NavHost is the container that holds the navigation graph
         navController = navController,
         startDestination = Screens.Roll.route
     )
     {
+        // NavGraphBuilder.composable basically says: "when route is X, show this composable"
         composable(route = Screens.Roll.route) {
             DiceWithButtonAndImage(navController = navController)
         }

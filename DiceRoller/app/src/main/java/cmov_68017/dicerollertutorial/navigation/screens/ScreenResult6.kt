@@ -35,7 +35,7 @@ import cmov_68017.dicerollertutorial.ui.theme.Purple40
 @Composable
 fun ScreenResult6(navController: NavHostController) {
 
-    var diceValue by remember {mutableStateOf(6)}
+    var diceValue by remember {mutableStateOf(1)}
 
     val imageResource = when (diceValue) {
         1 -> R.drawable.dice_1
@@ -106,6 +106,26 @@ fun ScreenResult6(navController: NavHostController) {
                 {
                     Text(
                         text = "You won! (6 ≥ 6)",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Purple40, // from Color.kt
+                        modifier = Modifier.padding(12.dp),
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+        } else {
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Card(
+                    shape = RoundedCornerShape(20.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+                )
+                {
+                    Text(
+                        text = "You lost!",
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = Purple40, // from Color.kt
