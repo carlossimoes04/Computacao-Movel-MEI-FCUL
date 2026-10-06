@@ -14,17 +14,29 @@ import cmov_68017.dicerollertutorial.navigation.screens.*
 fun NavGraph (navController: NavHostController) {
     NavHost( // NavHost is the container that holds the navigation graph
         navController = navController,
-        startDestination = Screens.Roll.route
+        // navController manages the transition between composables
+        startDestination = Screens.Roll.route // the first screen that the user sees
     )
     {
         // NavGraphBuilder.composable basically says: "when route is X, show this composable"
         composable(route = Screens.Roll.route) {
             DiceWithButtonAndImage(navController = navController)
         }
+        /*
+        the next block of code is commented because this composable is not used
+
         composable(route = Screens.DiceResult.route + "?result={result}") { navBackStack ->
             var resultShow: Int = navBackStack.arguments?.getString("result")?.toIntOrNull() ?: 1
+            // the getString is used to get the argument "result" (between {}) from the route
             DiceResult(navController = navController, resultShow = resultShow)
-        }
+        } */
+        /* the composable 'Screens.DiceResult.route + "?result={result}"', defines a generic
+        result screen that receives the dice result value as an argument via the route
+
+        the screen is always the same, but the dice result is different
+
+        this avoids creating six screens just to display a different dice result
+        */
         composable(route = Screens.ScreenResult1.route) {
             ScreenResult1(navController = navController)
         }
