@@ -115,6 +115,14 @@ fun ScreenResult6(navController: NavHostController) {
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = { navController.navigate("result_screen6") },
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp),
+                modifier = Modifier.height(52.dp)
+            ) {
+                Text(text = "Go To Result", fontSize = 24.sp)
+            }
+            Spacer(modifier = Modifier.height(16.dp))
         } else {
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly
