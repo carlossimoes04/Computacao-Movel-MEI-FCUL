@@ -23,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -46,8 +45,6 @@ fun ScreenResult6(navController: NavHostController) {
         5 -> R.drawable.dice_5
         else -> {R.drawable.dice_6}
     }
-
-    var hasRolled by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -98,63 +95,58 @@ fun ScreenResult6(navController: NavHostController) {
                 )
             }
         }
-        if (hasRolled) {
-            if (diceValue >= 6) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Card(
-                        shape = RoundedCornerShape(20.dp),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        if (diceValue >= 6) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Card(
+                    shape = RoundedCornerShape(20.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+                )
+                {
+                    Text(
+                        text = "You won! ($diceValue ≥ 6)",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Purple40, // from Color.kt
+                        modifier = Modifier.padding(12.dp),
+                        textAlign = TextAlign.Center
                     )
-                    {
-                        Text(
-                            text = "You won! ($diceValue ≥ 6)",
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Purple40, // from Color.kt
-                            modifier = Modifier.padding(12.dp),
-                            textAlign = TextAlign.Center
-                        )
-                    }
                 }
-                Spacer(modifier = Modifier.height(16.dp))
-                Button(
-                    onClick = { navController.navigate("result_screen$diceValue") },
-                    // result_screen$diceValue is the route to any screen with the dice result
-                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp),
-                    modifier = Modifier.height(52.dp)
-                ) {
-                    Text(text = "Go To Result", fontSize = 24.sp)
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-            } else {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Card(
-                        shape = RoundedCornerShape(20.dp),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-                    )
-                    {
-                        Text(
-                            text = "You lost! ($diceValue ≥ 6)",
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Red,
-                            modifier = Modifier.padding(12.dp),
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.height(16.dp))
             }
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = { navController.navigate("result_screen$diceValue") },
+                // result_screen$diceValue is the route to any screen with the dice result
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp),
+                modifier = Modifier.height(52.dp)
+            ) {
+                Text(text = "Go To Result", fontSize = 24.sp)
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+        } else {
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Card(
+                    shape = RoundedCornerShape(20.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+                )
+                {
+                    Text(
+                        text = "You lost!",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Purple40, // from Color.kt
+                        modifier = Modifier.padding(12.dp),
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
         }
         Button(
-            onClick = {
-                diceValue = (1..6).random()
-                hasRolled = true
-                },
+            onClick = { diceValue = (1..6).random() },
             elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp),
         ) {
             Text(text = "Roll Second Dice", fontSize = 22.sp)
