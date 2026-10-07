@@ -1,5 +1,17 @@
 package cmov_68017.dicerollertutorial.navigation
 
+/*
+Screens is a sealed class because it defines a closed, restricted hierarchy of all possible
+navigation routes
+
+This ensures type safety and enables exhaustive `when` statements, preventing typos or
+invalid screen destinations
+
+According to https://kotlinlang.org/docs/sealed-classes.html:
+"Sealed classes are best used for scenarios when:
+Limited class inheritance is desired: You have a predefined, finite set of subclasses
+that extend a class, all of which are known at compile time." which is this case
+ */
 sealed class Screens (val route: String) {
     object Roll : Screens("roll_screen")
     object DiceResult : Screens("result_screen/{result}")

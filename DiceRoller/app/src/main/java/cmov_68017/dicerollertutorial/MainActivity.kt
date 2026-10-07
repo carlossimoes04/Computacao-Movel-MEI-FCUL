@@ -47,7 +47,15 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DiceWithButtonAndImage(navController: NavHostController, modifier: Modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center)){
     var result by remember {  mutableStateOf(1) } // it's var because the dice result isn't always the same
-    // remember was used to save the state of the result variable
+    /*
+    remember is used to preserve this state in memory across recompositions; without it,
+    the variable would be re-initialized back to 1 every time the composable function
+    is re-executed
+
+    mutableStateOf is used to create a state variable that can be observed by other composables;
+    if the value does not change, the composable does not change either
+    (it remains static, and images and text do not change)
+    */
 
     val imageResource = when (result) {
         1 -> R.drawable.dice_1

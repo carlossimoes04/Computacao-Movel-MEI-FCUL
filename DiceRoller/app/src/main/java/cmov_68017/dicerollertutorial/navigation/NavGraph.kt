@@ -23,14 +23,16 @@ fun NavGraph (navController: NavHostController) {
             DiceWithButtonAndImage(navController = navController)
         }
         /*
+
         the next block of code is commented because this composable is not used
 
         composable(route = Screens.DiceResult.route + "?result={result}") { navBackStack ->
             var resultShow: Int = navBackStack.arguments?.getString("result")?.toIntOrNull() ?: 1
             // the getString is used to get the argument "result" (between {}) from the route
             DiceResult(navController = navController, resultShow = resultShow)
-        } */
-        /* the composable 'Screens.DiceResult.route + "?result={result}"', defines a generic
+        }
+
+        the composable 'Screens.DiceResult.route + "?result={result}"', defines a generic
         result screen that receives the dice result value as an argument via the route
 
         the screen is always the same, but the dice result is different

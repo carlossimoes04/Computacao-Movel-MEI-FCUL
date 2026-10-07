@@ -105,7 +105,7 @@ fun ScreenResult6(navController: NavHostController) {
                 )
                 {
                     Text(
-                        text = "You won! (6 ≥ 6)",
+                        text = "You won! ($diceValue ≥ 6)",
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = Purple40, // from Color.kt
@@ -116,7 +116,8 @@ fun ScreenResult6(navController: NavHostController) {
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = { navController.navigate("result_screen6") },
+                onClick = { navController.navigate("result_screen$diceValue") },
+                // result_screen$diceValue is the route to any screen with the dice result
                 elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp),
                 modifier = Modifier.height(52.dp)
             ) {
