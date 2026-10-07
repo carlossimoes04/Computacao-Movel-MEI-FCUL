@@ -36,8 +36,11 @@ fun ScreenResult2(navController: NavHostController) {
     var diceValue by remember {mutableStateOf(2)}
 
     val imageResource = when (diceValue) {
+        1 -> R.drawable.dice_1
         2 -> R.drawable.dice_2
+        3 -> R.drawable.dice_3
         4 -> R.drawable.dice_4
+        5 -> R.drawable.dice_5
         else -> {R.drawable.dice_6}
     }
 
@@ -74,11 +77,11 @@ fun ScreenResult2(navController: NavHostController) {
 
         Button(
             onClick = {
-                if (diceValue < 6) diceValue += 2 },
+                if (diceValue in 2..<7) diceValue -= 1 },
             // dices only have 6 sides, so the max value is 6
             elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp),
         ){
-            Text(text = "Increase dice value by 2", fontSize = 22.sp)
+            Text(text = "Decrease Dice Value by 1", fontSize = 22.sp)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
