@@ -19,10 +19,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.marsphotos.network.MarsApi
+import com.example.marsphotos.network.MarsPhoto
+import kotlinx.coroutines.launch
+import java.io.IOException
 
 class MarsViewModel : ViewModel() {
     /** The mutable State that stores the status of the most recent request */
-    var marsUiState: String by mutableStateOf("")
+    var marsUiState: MarsUiState by mutableStateOf(MarsUiState.Loading)
         private set
 
     /**
@@ -37,6 +42,38 @@ class MarsViewModel : ViewModel() {
      * [MarsPhoto] [List] [MutableList].
      */
     fun getMarsPhotos() {
-        marsUiState = "Set the Mars API status response here!"
+        viewModelScope.launch {
+            /*
+            Stage 7 of the tutorial:
+            - try-catch prevents the application from crashing
+            when the network call fails
+             */
+            try {
+                val listResult = MarsApi.retrofitService.getPhotos()
+                marsUiState = MarsUiState.Success(
+                    "Success: ${listResult.size} Mars photos retrieved"
+                )
+            } catch (e: IOException) {
+                MarsUiState.Error
+            }
+        }
     }
+    }
+
+/*
+Stage 7 of the tutorial:
+- marsUiState was being saved as a mutable state object, which can't save
+different status types, such as loading, success, and error
+To represent the status, a sealed interface was created.
+A sealed interface simplifies state management by limiting the possible values,
+which means that the marsUiState response is restricted to success, loading, and error.
+ */
+sealed interface MarsUiState {
+    data class Success (val photos: String) : MarsUiState
+    /*
+    For the Loading and Error states, there is no need to define new data or create objects,
+    since the user simply passes through the web response.
+     */
+    object Loading : MarsUiState
+    object Error : MarsUiState
 }
