@@ -6,11 +6,7 @@ plugins {
 
 android {
     namespace = "cmov_68017.rickandmortyexplorer"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "cmov_68017.rickandmortyexplorer"
@@ -41,8 +37,8 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation("androidx.core:core-ktx:1.15.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
@@ -51,7 +47,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 
     // --- ViewModel & Ciclo de Vida em Compose ---
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
 
     // --- Retrofit & Deserialização JSON ---
     implementation("com.squareup.retrofit2:retrofit:2.11.0")

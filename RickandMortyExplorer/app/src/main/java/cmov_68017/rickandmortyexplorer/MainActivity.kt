@@ -11,37 +11,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import cmov_68017.rickandmortyexplorer.ui.screens.HomeScreen
 import cmov_68017.rickandmortyexplorer.ui.theme.RickAndMortyExplorerTheme
+import cmov_68017.rickandmortyexplorer.ui.viewmodel.RickAndMortyViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            RickAndMortyExplorerTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            val viewModel: RickAndMortyViewModel = viewModel()
+            HomeScreen(viewModel = viewModel)
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    RickAndMortyExplorerTheme {
-        Greeting("Android")
     }
 }
