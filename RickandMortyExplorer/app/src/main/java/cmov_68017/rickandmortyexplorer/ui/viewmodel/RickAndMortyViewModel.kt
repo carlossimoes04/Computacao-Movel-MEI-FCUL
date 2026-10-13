@@ -11,14 +11,22 @@ import kotlinx.coroutines.launch
 
 class RickAndMortyViewModel : ViewModel() {
 
+    /*
+    Holds the observable screen state. When this value changes, Jetpack Compose
+    automatically recomposes the associated visual elements
+     */
     var rickAndMortyUiState: RickAndMortyUiState by mutableStateOf(RickAndMortyUiState.Loading)
         private set
 
     init {
+        // Upon instantiating the ViewModel, immediately trigger the initial API load
         getCharacter()
     }
 
     fun getCharacter(query: String? = null) {
+        // viewModelScope.launch creates an asynchronous coroutine
+        // tied to the ViewModel's lifecycle, allowing 'suspend' functions
+        // to be called without blocking the Main Thread
         viewModelScope.launch {
             rickAndMortyUiState = RickAndMortyUiState.Loading
             rickAndMortyUiState = try {
