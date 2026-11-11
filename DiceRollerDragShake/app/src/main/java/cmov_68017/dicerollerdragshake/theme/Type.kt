@@ -1,4 +1,4 @@
-package cmov_68017.dicerollertutorial.ui.theme
+package cmov_68017.dicerollerdragshake.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

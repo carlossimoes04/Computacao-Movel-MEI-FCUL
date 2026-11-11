@@ -1,4 +1,4 @@
-package cmov_68017.dicerollertutorial.ui.theme
+package cmov_68017.dicerollerdragshake.ui.theme
 
 import android.app.Activity
 import android.os.Build

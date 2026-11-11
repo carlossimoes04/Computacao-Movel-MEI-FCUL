@@ -1,4 +1,4 @@
-package cmov_68017.dicerollertutorial
+package cmov_68017.dicerollerdragshake
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import cmov_68017.dicerollertutorial.navigation.Screens
+import cmov_68017.dicerollerdragshake.navigation.Screens
 
 @Composable
 fun DiceResult(navController: NavHostController, resultShow: Int, modifier: Modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.Center)) {

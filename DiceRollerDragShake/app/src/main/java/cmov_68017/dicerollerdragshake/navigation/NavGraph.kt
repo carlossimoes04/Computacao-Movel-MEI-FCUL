@@ -1,11 +1,11 @@
-package cmov_68017.dicerollertutorial.navigation
+package cmov_68017.dicerollerdragshake.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
-import cmov_68017.dicerollertutorial.DiceResult
-import cmov_68017.dicerollertutorial.DiceWithButtonAndImage
-import cmov_68017.dicerollertutorial.navigation.screens.*
+import cmov_68017.dicerollerdragshake.DiceWithButtonAndImage
+import cmov_68017.dicerollerdragshake.DiceResult
+import cmov_68017.dicerollerdragshake.navigation.screens.*
 
 /**
  * NavGraph is the list of screens that the user can navigate to.

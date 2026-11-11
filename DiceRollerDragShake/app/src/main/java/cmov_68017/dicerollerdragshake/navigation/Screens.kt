@@ -1,4 +1,4 @@
-package cmov_68017.dicerollertutorial.navigation
+package cmov_68017.dicerollerdragshake.navigation
 
 /*
 Screens is a sealed class because it defines a closed, restricted hierarchy of all possible

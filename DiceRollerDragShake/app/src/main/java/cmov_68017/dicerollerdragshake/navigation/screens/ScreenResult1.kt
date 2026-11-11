@@ -1,4 +1,4 @@
-package cmov_68017.dicerollertutorial.navigation.screens
+package cmov_68017.dicerollerdragshake.navigation.screens
 
 import android.R.attr.text
 import androidx.compose.foundation.layout.Arrangement
@@ -29,8 +29,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import cmov_68017.dicerollertutorial.navigation.Screens
-import cmov_68017.dicerollertutorial.ui.theme.*
+import cmov_68017.dicerollerdragshake.navigation.Screens
+import cmov_68017.dicerollerdragshake.ui.theme.*
 
 @Composable
 fun ScreenResult1(navController: NavHostController) {
