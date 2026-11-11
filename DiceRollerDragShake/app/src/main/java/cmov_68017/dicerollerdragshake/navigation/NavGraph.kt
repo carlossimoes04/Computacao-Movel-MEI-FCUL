@@ -1,0 +1,61 @@
+package cmov_68017.dicerollertutorial.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.*
+import cmov_68017.dicerollertutorial.DiceResult
+import cmov_68017.dicerollertutorial.DiceWithButtonAndImage
+import cmov_68017.dicerollertutorial.navigation.screens.*
+
+/**
+ * NavGraph is the list of screens that the user can navigate to.
+ */
+@Composable
+fun NavGraph (navController: NavHostController) {
+    NavHost( // NavHost is the container that holds the navigation graph
+        navController = navController,
+        // navController manages the transition between composables
+        startDestination = Screens.Roll.route // the first screen that the user sees
+    )
+    {
+        // NavGraphBuilder.composable basically says: "when route is X, show this composable"
+        composable(route = Screens.Roll.route) {
+            DiceWithButtonAndImage(navController = navController)
+        }
+        /*
+
+        the next block of code is commented because this composable is not used
+
+        composable(route = Screens.DiceResult.route + "?result={result}") { navBackStack ->
+            var resultShow: Int = navBackStack.arguments?.getString("result")?.toIntOrNull() ?: 1
+            // the getString is used to get the argument "result" (between {}) from the route
+            DiceResult(navController = navController, resultShow = resultShow)
+        }
+
+        the composable 'Screens.DiceResult.route + "?result={result}"', defines a generic
+        result screen that receives the dice result value as an argument via the route
+
+        the screen is always the same, but the dice result is different
+
+        this avoids creating six screens just to display a different dice result
+        */
+        composable(route = Screens.ScreenResult1.route) {
+            ScreenResult1(navController = navController)
+        }
+        composable(route = Screens.ScreenResult2.route) {
+            ScreenResult2(navController = navController)
+        }
+        composable(route = Screens.ScreenResult3.route) {
+            ScreenResult3(navController = navController)
+        }
+        composable(route = Screens.ScreenResult4.route) {
+            ScreenResult4(navController = navController)
+        }
+        composable(route = Screens.ScreenResult5.route) {
+            ScreenResult5(navController = navController)
+        }
+        composable(route = Screens.ScreenResult6.route) {
+            ScreenResult6(navController = navController)
+        }
+    }
+}
