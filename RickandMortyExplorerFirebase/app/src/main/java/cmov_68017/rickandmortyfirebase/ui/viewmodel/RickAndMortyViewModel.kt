@@ -154,7 +154,9 @@ class RickAndMortyViewModel : ViewModel() {
                 firstValue = currentState.item.firstValue,
                 secondLabel = currentState.item.secondLabel,
                 secondValue = currentState.item.secondValue,
-                category = currentState.currentCategory
+                category = currentState.currentCategory,
+                latitude = currentState.item.latitude,
+                longitude = currentState.item.longitude
             )
             firebaseRepository.saveItem(itemToSave)
         }
@@ -170,7 +172,9 @@ class RickAndMortyViewModel : ViewModel() {
                 firstLabel = lastSaved.firstLabel,
                 firstValue = lastSaved.firstValue,
                 secondLabel = lastSaved.secondLabel,
-                secondValue = lastSaved.secondValue
+                secondValue = lastSaved.secondValue,
+                latitude = lastSaved.latitude,
+                longitude = lastSaved.longitude
             )
 
             val (categoryList, total) = try {
@@ -215,6 +219,32 @@ class RickAndMortyViewModel : ViewModel() {
                 currentCategory = lastSaved.category,
                 rollCount = currentSyncedRolls
             )
+        }
+    }
+
+    fun updateCurrentItemPhotoAndLocation(photoUri: String, latitude: Double?, longitude: Double?) {
+        val currentState = rickAndMortyUiState as? RickAndMortyUiState.Success ?: return
+        val updatedItem = currentState.item.copy(
+            imageUrl = photoUri,
+            latitude = latitude,
+            longitude = longitude
+        )
+
+        rickAndMortyUiState = currentState.copy(item = updatedItem)
+
+        viewModelScope.launch {
+            val itemToSave = SavedItem(
+                name = updatedItem.name,
+                imageUrl = updatedItem.imageUrl,
+                firstLabel = updatedItem.firstLabel,
+                firstValue = updatedItem.firstValue,
+                secondLabel = updatedItem.secondLabel,
+                secondValue = updatedItem.secondValue,
+                category = currentState.currentCategory,
+                latitude = latitude,
+                longitude = longitude
+            )
+            firebaseRepository.saveItem(itemToSave)
         }
     }
 }

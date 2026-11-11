@@ -3,6 +3,8 @@ package cmov_68017.rickandmortyfirebase.ui.screens.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,6 +35,7 @@ fun ItemDisplayCard(
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             if (item.imageUrl != null) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
@@ -61,43 +64,64 @@ fun ItemDisplayCard(
 
             Text(
                 text = item.name,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                fontSize = 20.sp
+                color = MaterialTheme.colorScheme.onSurface
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
-            HorizontalDivider()
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = item.firstLabel,
-                        fontSize = 12.sp,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                InfoColumn(label = item.firstLabel, value = item.firstValue)
+                InfoColumn(label = item.secondLabel, value = item.secondValue)
+            }
+
+            if (item.latitude != null && item.longitude != null) {
+                Spacer(modifier = Modifier.height(12.dp))
+                Row(
+                    modifier = Modifier
+                        .background(
+                            MaterialTheme.colorScheme.primaryContainer,
+                            shape = RoundedCornerShape(8.dp)
+                        )
+                        .padding(horizontal = 12.dp, vertical = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.LocationOn,
+                        contentDescription = "GPS",
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                        modifier = Modifier.size(18.dp)
                     )
+                    Spacer(modifier = Modifier.width(6.dp))
                     Text(
-                        text = item.firstValue,
+                        text = "Lat: ${"%.4f".format(item.latitude)}, Lon: ${"%.4f".format(item.longitude)}",
+                        fontSize = 13.sp,
                         fontWeight = FontWeight.SemiBold,
-                        fontSize = 15.sp
-                    )
-                }
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        text = item.secondLabel,
-                        fontSize = 12.sp,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Text(
-                        text = item.secondValue,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 15.sp
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun InfoColumn(label: String, value: String) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            text = label,
+            fontSize = 12.sp,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Text(
+            text = value,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Medium,
+            color = MaterialTheme.colorScheme.onSurface
+        )
     }
 }

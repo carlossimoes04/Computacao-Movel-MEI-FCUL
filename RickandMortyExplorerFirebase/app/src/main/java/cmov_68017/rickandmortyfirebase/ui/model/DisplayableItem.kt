@@ -6,5 +6,7 @@ data class DisplayableItem(
     val firstLabel: String,
     val firstValue: String,
     val secondLabel: String,
-    val secondValue: String
+    val secondValue: String,
+    val latitude: Double? = null,
+    val longitude: Double? = null
 )

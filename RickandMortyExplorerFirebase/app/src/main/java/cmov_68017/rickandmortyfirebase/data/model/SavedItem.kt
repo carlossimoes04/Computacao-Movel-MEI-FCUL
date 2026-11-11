@@ -10,5 +10,7 @@ data class SavedItem(
     val secondLabel: String = "",
     val secondValue: String = "",
     val category: Category = Category.CHARACTER,
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long = System.currentTimeMillis(),
+    val latitude: Double? = null,
+    val longitude: Double? = null
 )
