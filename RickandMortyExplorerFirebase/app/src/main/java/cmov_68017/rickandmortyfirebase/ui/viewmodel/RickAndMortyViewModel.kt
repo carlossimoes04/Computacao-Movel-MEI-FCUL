@@ -106,14 +106,18 @@ class RickAndMortyViewModel : ViewModel() {
             rickAndMortyUiState = RickAndMortyUiState.Loading
             rickAndMortyUiState = try {
                 val listResult = RickAndMortyApi.retrofitService.getLocations(name = query)
+                val savedLocations = firebaseRepository.getAllLocationData()
                 val displayableList = listResult.results.map { location ->
+                    val saved = savedLocations[location.name]
                     DisplayableItem(
                         name = location.name,
-                        imageUrl = null, // locations don't bring images from API
+                        imageUrl = saved?.imageUrl,
                         firstLabel = "Type",
                         firstValue = location.type ?: "Unknown",
                         secondLabel = "Dimension",
-                        secondValue = location.dimension ?: "Unknown"
+                        secondValue = location.dimension ?: "Unknown",
+                        latitude = saved?.latitude,
+                        longitude = saved?.longitude
                     )
                 }
                 if (displayableList.isNotEmpty()) {
@@ -122,7 +126,8 @@ class RickAndMortyViewModel : ViewModel() {
                         totalCount = listResult.info.count,
                         currentViewCount = displayableList.size,
                         items = displayableList,
-                        currentCategory = Category.LOCATION
+                        currentCategory = Category.LOCATION,
+                        rollCount = currentSyncedRolls
                     )
                 } else {
                     RickAndMortyUiState.Error
@@ -230,7 +235,14 @@ class RickAndMortyViewModel : ViewModel() {
             longitude = longitude
         )
 
-        rickAndMortyUiState = currentState.copy(item = updatedItem)
+        val updatedItems = currentState.items.map {
+            if (it.name == updatedItem.name) updatedItem else it
+        }
+
+        rickAndMortyUiState = currentState.copy(
+            item = updatedItem,
+            items = updatedItems
+        )
 
         viewModelScope.launch {
             val itemToSave = SavedItem(
@@ -245,6 +257,7 @@ class RickAndMortyViewModel : ViewModel() {
                 longitude = longitude
             )
             firebaseRepository.saveItem(itemToSave)
+            firebaseRepository.saveLocationData(itemToSave)
         }
     }
 }

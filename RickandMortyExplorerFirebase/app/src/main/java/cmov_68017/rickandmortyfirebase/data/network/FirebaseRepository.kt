@@ -42,4 +42,25 @@ class FirebaseRepository {
         return snapshot.getValue(SavedItem::class.java)
     }
 
+    private fun sanitizeKey(name: String): String {
+        return name.replace(Regex("[.#$\\[\\]/]"), "_")
+    }
+
+    suspend fun saveLocationData(item: SavedItem) {
+        val key = sanitizeKey(item.name)
+        database.child("locationPhotos").child(key).setValue(item).await()
+    }
+
+    suspend fun getAllLocationData(): Map<String, SavedItem> {
+        val snapshot = database.child("locationPhotos").get().await()
+        val result = mutableMapOf<String, SavedItem>()
+        for (child in snapshot.children) {
+            val saved = child.getValue(SavedItem::class.java)
+            if (saved != null) {
+                result[saved.name] = saved
+            }
+        }
+        return result
+    }
+
 }

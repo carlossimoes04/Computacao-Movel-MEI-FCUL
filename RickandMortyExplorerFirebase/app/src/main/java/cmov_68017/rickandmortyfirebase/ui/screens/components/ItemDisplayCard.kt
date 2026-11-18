@@ -20,6 +20,9 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import cmov_68017.rickandmortyfirebase.ui.model.DisplayableItem
 
+import android.util.Base64
+import androidx.compose.runtime.remember
+
 @Composable
 fun ItemDisplayCard(
     item: DisplayableItem,
@@ -37,9 +40,18 @@ fun ItemDisplayCard(
         ) {
 
             if (item.imageUrl != null) {
+                val imageData: Any = remember(item.imageUrl) {
+                    if (item.imageUrl.startsWith("data:image")) {
+                        val base64Part = item.imageUrl.substringAfter("base64,")
+                        Base64.decode(base64Part, Base64.DEFAULT)
+                    } else {
+                        item.imageUrl
+                    }
+                }
+
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(item.imageUrl)
+                        .data(imageData)
                         .crossfade(true)
                         .build(),
                     contentDescription = item.name,
@@ -48,16 +60,6 @@ fun ItemDisplayCard(
                         .size(180.dp)
                         .clip(RoundedCornerShape(12.dp))
                 )
-            } else {
-                Box(
-                    modifier = Modifier
-                        .size(180.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(Color.LightGray.copy(alpha = 0.5f)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = "No Image", color = Color.DarkGray)
-                }
             }
 
             Spacer(modifier = Modifier.height(12.dp))

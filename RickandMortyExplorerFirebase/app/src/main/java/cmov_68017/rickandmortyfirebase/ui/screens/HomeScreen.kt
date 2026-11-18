@@ -34,6 +34,10 @@ import cmov_68017.rickandmortyfirebase.ui.viewmodel.RickAndMortyUiState
 import cmov_68017.rickandmortyfirebase.ui.viewmodel.RickAndMortyViewModel
 import com.google.android.gms.location.LocationServices
 
+import android.util.Log
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
@@ -51,9 +55,37 @@ fun HomeScreen(
     @SuppressLint("MissingPermission")
     fun fetchLocationAndOpenCamera() {
         fusedLocationClient.lastLocation
-            .addOnSuccessListener { location: Location? ->
-                lastCapturedLocation = location
-                showCamera = true
+            .addOnSuccessListener { lastLoc ->
+                if (lastLoc != null) {
+                    Log.d("GPS", "lastLocation: ${lastLoc.latitude}, ${lastLoc.longitude}")
+                    lastCapturedLocation = lastLoc
+                    showCamera = true
+                } else {
+                    fusedLocationClient.getCurrentLocation(
+                        Priority.PRIORITY_HIGH_ACCURACY,
+                        CancellationTokenSource().token
+                    ).addOnSuccessListener { highAccLoc ->
+                        if (highAccLoc != null) {
+                            Log.d("GPS", "highAcc: ${highAccLoc.latitude}, ${highAccLoc.longitude}")
+                            lastCapturedLocation = highAccLoc
+                            showCamera = true
+                        } else {
+                            // Fallback para Wi-Fi / rede móvel (funciona em interiores e com permissão aproximada)
+                            fusedLocationClient.getCurrentLocation(
+                                Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+                                CancellationTokenSource().token
+                            ).addOnSuccessListener { balancedLoc ->
+                                Log.d("GPS", "balanced: ${balancedLoc?.latitude}, ${balancedLoc?.longitude}")
+                                lastCapturedLocation = balancedLoc
+                                showCamera = true
+                            }.addOnFailureListener {
+                                showCamera = true
+                            }
+                        }
+                    }.addOnFailureListener {
+                        showCamera = true
+                    }
+                }
             }
             .addOnFailureListener {
                 showCamera = true
@@ -91,10 +123,10 @@ fun HomeScreen(
     // Se a câmara estiver ativa, exibe o ecrã de pré-visualização da câmara a ecrã inteiro
     if (showCamera) {
         CameraScreen(
-            onPhotoCaptured = { photoUri ->
+            onPhotoCaptured = { photoBase64 ->
                 showCamera = false
                 viewModel.updateCurrentItemPhotoAndLocation(
-                    photoUri = photoUri.toString(),
+                    photoUri = photoBase64,
                     latitude = lastCapturedLocation?.latitude,
                     longitude = lastCapturedLocation?.longitude
                 )

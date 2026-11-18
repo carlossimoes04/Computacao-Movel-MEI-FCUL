@@ -42,10 +42,14 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
+import java.io.ByteArrayOutputStream
 
 @Composable
 fun CameraScreen(
-    onPhotoCaptured: (Uri) -> Unit,
+    onPhotoCaptured: (String) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -154,27 +158,52 @@ fun CameraScreen(
 private fun takePhoto(
     context: Context,
     imageCapture: ImageCapture,
-    onPhotoCaptured: (Uri) -> Unit
+    onPhotoCaptured: (String) -> Unit
 ) {
     val photoFile = File(
         context.cacheDir,
         SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS", Locale.US).format(System.currentTimeMillis()) + ".jpg"
     )
-
     val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-
     imageCapture.takePicture(
         outputOptions,
         ContextCompat.getMainExecutor(context),
         object : ImageCapture.OnImageSavedCallback {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                val savedUri = Uri.fromFile(photoFile)
-                onPhotoCaptured(savedUri)
+                val base64Image = fileToBase64(photoFile)
+                photoFile.delete() // já não precisa do ficheiro temporário
+                if (base64Image != null) {
+                    onPhotoCaptured(base64Image)
+                }
             }
-
             override fun onError(exception: ImageCaptureException) {
                 Log.e("CameraScreen", "Photo capture failed: ${exception.message}", exception)
             }
         }
     )
+}
+private fun fileToBase64(file: File, maxDimension: Int = 800, quality: Int = 75): String? {
+    val originalBitmap = BitmapFactory.decodeFile(file.absolutePath) ?: return null
+    val ratio = minOf(
+        maxDimension.toFloat() / originalBitmap.width,
+        maxDimension.toFloat() / originalBitmap.height,
+        1f
+    )
+    val scaledBitmap = if (ratio < 1f) {
+        Bitmap.createScaledBitmap(
+            originalBitmap,
+            (originalBitmap.width * ratio).toInt(),
+            (originalBitmap.height * ratio).toInt(),
+            true
+        )
+    } else {
+        originalBitmap
+    }
+    val outputStream = ByteArrayOutputStream()
+    scaledBitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
+    val byteArray = outputStream.toByteArray()
+    if (scaledBitmap != originalBitmap) originalBitmap.recycle()
+    scaledBitmap.recycle()
+    val base64 = Base64.encodeToString(byteArray, Base64.NO_WRAP)
+    return "data:image/jpeg;base64,$base64"
 }
